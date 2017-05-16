@@ -1,0 +1,186 @@
+   en
+14R2#do    sh run
+Building configuration...
+
+
+Current configuration : 2129 bytes
+!
+! Last configuration change at 12:37:00 UTC Mon May 15 2017
+version 15.3
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname 14R2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+ip cef
+!
+!
+ --More--         !
+!
+
+
+!
+!
+!
+!
+ipv6 multicast rpf use-bgp
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+voice-card 0
+!
+!
+!
+!
+!
+ --More--         !
+!
+!
+license udi pid C3900-SPE100/K9 sn FOC15450QEQ
+hw-module pvdm 0/0
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+csdb tcp synwait-time 30
+csdb tcp idle-time 3600
+csdb tcp finwait-time 5
+csdb tcp reassembly max-memory 1024
+csdb tcp reassembly max-queue-length 16
+csdb udp idle-time 30
+csdb icmp idle-time 10
+csdb session max-session 65535
+ --More--         ! 
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 20.2.14.2 255.255.255.255
+!
+interface Embedded-Service-Engine0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/0
+ ip address 10.1.12.2 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ no ip address
+ --More--          shutdown
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface Serial0/0/0
+ no ip address
+ shutdown
+!
+interface Serial0/0/1
+ ip address 192.168.140.2 255.255.255.252
+!
+interface Serial0/1/0
+ no ip address
+ shutdown
+!
+interface Serial0/1/1
+ no ip address
+ --More--          shutdown
+ clock rate 2000000
+!
+interface GigabitEthernet0/2/0
+ no ip address
+ shutdown
+ negotiation auto
+!
+!
+router rip
+ version 2
+ network 10.0.0.0
+ network 20.0.0.0
+ no auto-summary
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+nls resp-timeout 1
+ --More--         cpd cr-id 1
+!
+!
+control-plane
+!
+ !
+ !
+ !
+!
+!
+mgcp behavior rsip-range tgcp-only
+mgcp behavior comedia-role none
+mgcp behavior comedia-check-media-src disable
+mgcp behavior comedia-sdp-force disable
+!
+mgcp profile default
+!
+!
+!
+!
+!
+gatekeeper
+ shutdown
+ --More--         !
+!
+!
+line con 0
+line aux 0
+line 2
+ no activation-character
+ no exec
+ transport preferred none
+ transport input all
+ transport output lat pad telnet rlogin lapb-ta mop udptn v120 ssh
+ stopbits 1
+line vty 0 4
+ login
+ transport input all
+!
+scheduler allocate 20000 1000
+!
+end
+
+14R2#
